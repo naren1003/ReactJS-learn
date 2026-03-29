@@ -11,6 +11,14 @@
 
     <script src="https://unpkg.com/supersimpledev/babel.js"></script>
     <script type="text/babel">
+        function SendMessage(){
+            chatMessage.push({
+                message:'test',
+                sender: 'user',
+                id:crypto.randomUUID()
+            });
+        }
+
         function ChatInput(){
             return(
                 <>
@@ -18,25 +26,12 @@
                         placeholder = "Send a message to ChatBot" 
                         size="30"
                      />
-                    <button>Send</button>
+                    <button onClick = {SendMessage}>Send</button>
                 </>
             );
         }
 
         function ChatMessage({message,sender}){
-            // const message = props.message; // => does the same thing
-            // const sender = props.sender;
-            //const { message,sender } = props;
-
-            // if(sender === 'robot'){
-            //     return(
-            //         <div>
-            //             <img src="robot.png" width="50" />
-            //             {message}
-            //         </div>
-            //     );
-            // }
-
             return(
                 <div>
                     {sender === 'robot' && (
@@ -50,26 +45,45 @@
             );
         }
 
+        function ChatMessages(){
+            const chatMessage = [{
+                message: 'hello ChatBot',
+                sender: 'user',
+                id: 'id1'
+            },{
+                message: 'Hello! How can I help you?',
+                sender: 'robot',
+                id: 'id2'
+            },{
+                message: 'can u get me todays date?',
+                sender: 'user',
+                id: 'id3'
+            },{
+                message: 'Today is March 29',
+                sender: 'robot',
+                id: 'id4'
+            }];
+
+            return(
+                <>  
+                    {chatMessage.map((chatMessage) => {
+                        return(
+                            <ChatMessage 
+                                message = {chatMessage.message}
+                                sender = {chatMessage.sender}
+                                key = {chatMessage.id}
+                            />
+                        );
+                    })} 
+                </>
+            );
+        }
+
         function App(){
             return(
                 <>
                     <ChatInput />
-                    <ChatMessage 
-                        message = "hello ChatBot" 
-                        sender = "user" 
-                    />
-                    <ChatMessage 
-                        message = "Hello! How can I help you?" 
-                        sender = "robot" 
-                    />
-                    <ChatMessage 
-                        message = "can u get me todays date" 
-                        sender="user" 
-                    />
-                    <ChatMessage 
-                        message = "Today is March 29" 
-                        sender = "robot" 
-                    />
+                    <ChatMessages />
                 </>
             );
         }
