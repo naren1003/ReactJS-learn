@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ex3.1</title>
+  </head>
+  <body>
+    <div class="js-container"></div>
+
+    <script src="https://unpkg.com/supersimpledev/react.js"></script>
+    <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
+
+    <script src="https://unpkg.com/supersimpledev/babel.js"></script>
+    <script type="text/babel">
+        function TextInput() {
+            const [para,setPara] = React.useState('');
+
+            function UpdatePara(event){
+                setPara(event.target.value);
+            }
+
+            function Reset(){
+                setPara('');
+            }
+
+            function Example(){
+                setPara('Narendra');
+            }
+
+            return(
+                <>
+                    <input 
+                    type = "text"
+                    placeholder = "Type your name here"
+                    onChange = {UpdatePara}
+                    value = {para}/>
+                    <button onClick={Reset}>Reset</button>
+                    <button onClick={Example}>Example</button>
+                    <p>hello {para}</p>
+                </>
+            );
+        }
+
+        function App() {
+
+            return (
+                <>
+                    <TextInput/>
+                </>
+            )
+        }
+
+        const container = document.querySelector('.js-container');
+        ReactDOM.createRoot(container).render(<App />);
+    </script>
+  </body>
+</html> 
