@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ex4.1 - login form</title>
+    <style>
+        body{
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        input{
+            padding:10px;
+            margin:5px;
+        }
+
+        button{
+            background-color: rgb(0,123,255);
+            padding:10px 20px;
+            margin-top:10px;
+            margin-right:20px;
+            color: white;
+            border:none;
+            border-radius: 10px;
+        }
+
+        .show-btn{
+            background-color: white;
+            color: black;
+            border:1px solid black;
+        }
+
+    </style>
+  </head>
+  <body>
+    <div class="js-container"></div>
+
+    <script src="https://unpkg.com/supersimpledev/react.js"></script>
+    <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
+
+    <script src="https://unpkg.com/supersimpledev/babel.js"></script>
+    <script type="text/babel">
+
+        function LoginForm(){
+            const [flag,setFlag] = React.useState(true);
+
+            function flipPassword(){
+                setFlag(prev => (!prev));
+            }
+
+            return(
+                <>
+                    <p>Hello, welcome to my website!!</p>
+                    <div>
+                        <input type = "email" placeholder = "Email" />
+                    </div>
+                    <div>
+                        <input type = {flag ? 'password' : 'text'} placeholder = "password" />
+                        <button className = "show-btn" onClick = {flipPassword}> {flag ? "Show" : "Hide"} </button>
+                    </div>
+                    <button>Login</button>
+                    <button>Sign Up</button>
+                </>
+            );  
+        }
+
+        function App(){
+            return(
+                <LoginForm />
+            );
+        }
+
+        const container = document.querySelector('.js-container');
+        ReactDOM.createRoot(container).render(<App />);
+    </script>
+  </body>
+</html> 

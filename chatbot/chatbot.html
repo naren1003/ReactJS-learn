@@ -75,6 +75,10 @@
             scrollbar-width: none;
         }
 
+        .welcome-message {
+            color: rgb(120, 120, 120);
+            text-align: center;
+        }
     </style>
   </head>
   <body>
@@ -199,27 +203,15 @@
         }
 
         function App(){
-            const [chatMessages,setChatMessages] = React.useState([{
-                message: 'hello ChatBot',
-                sender: 'user',
-                id: 'id1'
-            },{
-                message: 'Hello! How can I help you?',
-                sender: 'robot',
-                id: 'id2'
-            },{
-                message: 'can u get me todays date?',
-                sender: 'user',
-                id: 'id3'
-            },{
-                message: 'Today is March 29',
-                sender: 'robot',
-                id: 'id4'
-            }]);
+            const [chatMessages,setChatMessages] = React.useState([]);
 
             return(
                 <div className = "app-container">
-                    
+                    {chatMessages.length === 0 && (
+                        <p className="welcome-message">
+                            Welcome to the chatbot project! Send a message using the textbox below.
+                        </p>
+                    )}
                     <ChatMessages 
                     chatMessages = {chatMessages}
                     setChatMessages = {setChatMessages}
