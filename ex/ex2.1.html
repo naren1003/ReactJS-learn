@@ -15,24 +15,28 @@
         function ProductDetails({product}){
             return(
                 <>
+                    
                     {product === 'Cotton Socks' && (
                         <>
                             <p>{product}</p>
                             <p>Price: $10</p>
                         </>
                     )}
+
                     {product === 'Tennis Ball' && (
                         <>
                             <p>{product}</p>
                             <p>Price: $20</p>
                         </>
                     )}
+
                     {product === 'T-shirt' && (
                         <>
                             <p>{product}</p>
                             <p>Price: $7.99</p>
                         </>
                     )}
+                    
                     <button>Add to Cart</button>
                 </>
             );  
