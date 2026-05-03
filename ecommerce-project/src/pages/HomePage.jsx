@@ -1,3 +1,4 @@
+import {axios} from 'axios';
 import { Header } from '../components/Header';
 import { products } from '../../starting-code/data/products';
 import './HomePage.css';
