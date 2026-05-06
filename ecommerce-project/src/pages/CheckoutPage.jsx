@@ -7,12 +7,18 @@ import './CheckoutPage.css';
 
 export function CheckoutPage({ cart }) {
     const [deliveryOptions, setDeliveryOptions] = useState([]);
+    const [paymentSummary, setpPaymentSummary] = useState(null);
 
     useEffect(() => {
         axios.get('/api/delivery-options?expand=estimateDeliveryTime')
             .then((response) => {
                 setDeliveryOptions(response.data);
             });
+
+        axios.get('/api/payment-summary')
+            .then((response) => {
+                setpPaymentSummary(response.data);
+            })
     }, []);
 
     return (
@@ -87,13 +93,13 @@ export function CheckoutPage({ cart }) {
                                             {deliveryOptions.map((deliveryOptions) => {
                                                 let priceString = 'Free Shipping';
 
-                                                if(deliveryOptions.priceCents > 0){
+                                                if (deliveryOptions.priceCents > 0) {
                                                     priceString = `${formatMoney(deliveryOptions.priceCents)} - Shipping`
                                                 }
 
                                                 return (
-                                                    <div key = {deliveryOptions.id} className="delivery-option">
-                                                        <input type="radio" 
+                                                    <div key={deliveryOptions.id} className="delivery-option">
+                                                        <input type="radio"
                                                             checked={deliveryOptions.id === cartItem.deliveryOptionId}
                                                             className="delivery-option-input"
                                                             name={`delivery-options-${cartItem.productId}`} />
@@ -120,34 +126,49 @@ export function CheckoutPage({ cart }) {
                             Payment Summary
                         </div>
 
-                        <div className="payment-summary-row">
-                            <div>Items (3):</div>
-                            <div className="payment-summary-money">$42.75</div>
-                        </div>
+                        {paymentSummary && (
+                            <>
+                                <div className="payment-summary-row">
+                                    <div>Items ({paymentSummary.totalItems}):</div>
+                                    <div className="payment-summary-money">
+                                        {formatMoney(paymentSummary.productCostCents)}
+                                    </div>
+                                </div>
 
-                        <div className="payment-summary-row">
-                            <div>Shipping &amp; handling:</div>
-                            <div className="payment-summary-money">$4.99</div>
-                        </div>
+                                <div className="payment-summary-row">
+                                    <div>Shipping &amp; handling:</div>
+                                    <div className="payment-summary-money">
+                                        {formatMoney(paymentSummary.shippingCostCents)}
+                                    </div>
+                                </div>
 
-                        <div className="payment-summary-row subtotal-row">
-                            <div>Total before tax:</div>
-                            <div className="payment-summary-money">$47.74</div>
-                        </div>
+                                <div className="payment-summary-row subtotal-row">
+                                    <div>Total before tax:</div>
+                                    <div className="payment-summary-money">
+                                        {formatMoney(paymentSummary.totalCostBeforeTaxCents)}
+                                    </div>
+                                </div>
 
-                        <div className="payment-summary-row">
-                            <div>Estimated tax (10%):</div>
-                            <div className="payment-summary-money">$4.77</div>
-                        </div>
+                                <div className="payment-summary-row">
+                                    <div>Estimated tax (10%):</div>
+                                    <div className="payment-summary-money">
+                                        {formatMoney(paymentSummary.taxCents)}
+                                    </div>
+                                </div>
 
-                        <div className="payment-summary-row total-row">
-                            <div>Order total:</div>
-                            <div className="payment-summary-money">$52.51</div>
-                        </div>
+                                <div className="payment-summary-row total-row">
+                                    <div>Order total:</div>
+                                    <div className="payment-summary-money">
+                                        {formatMoney(paymentSummary.totalCostCents)}
+                                    </div>
+                                </div>
 
-                        <button className="place-order-button button-primary">
-                            Place your order
-                        </button>
+                                <button className="place-order-button button-primary">
+                                    Place your order
+                                </button>
+                            </>
+                        )}
+
                     </div>
                 </div>
             </div>
